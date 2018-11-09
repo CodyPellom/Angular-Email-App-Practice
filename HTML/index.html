@@ -1,12 +1,76 @@
 <!DOCTYPE html>
-<html>
-<header>
+<html ng-app="emailApp">
 
-</header>
+<head>
+    <title>Sample Angular Email App</title>
+    <!--This is the controller section-->
+
+</head>
+
 <body>
-<script src="../node_modules/angular/angular.js"></script>
-<script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.7.5/angular.min.js"></script>
-<script src="https://code.jquery.com/jquery-3.3.1.min.js"></script>
-<script src="../JS/main.js"></script>
+
+    <div ng-controller="TestCtrl">
+        <h1>{{title}}</h1>
+        <input type="text" ng-model="title">
+    </div>
+
+    <script src="../node_modules/angular/angular.js"></script>
+    <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.7.5/angular.min.js"></script>
+    <script src="https://code.jquery.com/jquery-3.3.1.min.js"></script>
+    <script src="../JS/main.js"></script>
+
+    <script>
+        function TestCtrl($scope) {
+            $scope.title = "This is an Angular based email application"
+        };
+    </script>
+    <div ng-view></div>
+    <script>
+        angular.module('emailApp', ['angular-route']);
+
+        var app = angular.module('app', ['ngRoute']);
+        app.config(function ($routeProvider) {
+                $routeProvider.when('/inbox', {
+                        templateUrl: 'views/inbox.html',
+                        controller: 'InboxCtrl',
+                        controllerAs: 'inbox'
+                    })
+                    .when('/inbox/email/:id', {
+                        templateUrl: 'views/email.html',
+                        controller: 'EmailCtrl',
+                        conrollerAs: 'email'
+                    })
+                    .otherwise({
+                        redirectTo: '/inbox'
+                    });
+            )
+        };
+    </script>
+    <script>
+        app.config(function ($routeProvider) {
+            $routeProvider
+                .when('/inbox', {
+                    templateUrl: 'views/inbox.html',
+                    controller: 'InboxCtrl',
+                    conrollerAs: 'inbox'
+                })
+                .when('/inbox/email/:id', {
+                    templateUrl: 'views/email.html',
+                    controller: 'EmailCtrl',
+                    controllerAs: 'email'
+                })
+                .otherwise({
+                    redirectTo: '/inbox'
+                });
+        });
+    </script>
+    <script>
+    app.controller('InboxCtrl', function($scope) {
+    $scope.title = "example title this is a title";        
+    });
+
+    
+    </script>
 </body>
+
 </html>
